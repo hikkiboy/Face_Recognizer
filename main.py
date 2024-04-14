@@ -49,8 +49,15 @@ class App:
         self._label.after(20, self.process_webcam)
         
     def add_image_to_label(self,label):
-        pass
-    
+        imgtk = ImageTk.PhotoImage(image=self.most_recent_capture_pil)
+        
+        label.imgtk = imgtk
+        
+        label.configure(image = imgtk)
+        
+        self.register_new_user_capture = self.most_recent_capture_arr.copy()
+        
+
     
     def login(self):
         pass
@@ -62,7 +69,7 @@ class App:
         
         self.acceptbutton.place(x=750, y=300)
         
-        self.tryagainbutton = util.get_button(self.register_new_window, 'Tentar novamente', 'red', self.register)
+        self.tryagainbutton = util.get_button(self.register_new_window, 'Tentar novamente', 'red', self.try_again)
         
         self.tryagainbutton.place(x=750, y = 400)
         
@@ -70,11 +77,22 @@ class App:
         
         self.capture_label.place(x = 10, y= 0, width= 700, height=500)
         
-        self.add_image_to_label()
+        self.add_image_to_label(self.capture_label)
+        
+        self.entry_text_new_user = util.get_entry_text(self.register_new_window)
+        self.entry_text_new_user.place(x = 750, y =150)
         
     
     def start(self):
         self.main_window.mainloop()
+        
+    def try_again(self):
+        self.register_new_window.destroy()
+        
+    def accept(self):
+        pass   
+        
+        
     
 if __name__ == "__main__":
     app = App() 
